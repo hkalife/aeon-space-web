@@ -11,7 +11,15 @@
         </q-form>
       </q-card-section>
       <q-card-actions class="q-px-md">
-        <q-btn unelevated color="primary" size="md" class="full-width" label="Entrar" />
+        <q-btn
+          @click="logUser()"
+          to="/member-home"
+          unelevated
+          color="primary"
+          size="md"
+          class="full-width"
+          label="Entrar"
+        />
       </q-card-actions>
       <q-card-section class="text-center q-pb-sm">
         <p class="text-grey-6">Sem registro? Clique aqui e crie sua conta!</p>
@@ -28,6 +36,11 @@ export default {
     return {
       email: '',
       password: ''
+    }
+  },
+  methods: {
+    logUser () {
+      console.log('login')
     }
   }
 }
