@@ -48,16 +48,6 @@ export default {
   box-sizing: border-box;
 }
 
-body{
-  margin:0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size:1rem;
-  font-weight:normal;
-  line-height:1.5;
-  color:#333;
-  overflow-x:hidden;
-}
-
 .v-header{
   display:flex;
   align-items:center;
@@ -92,41 +82,14 @@ body{
   z-index:2;
 }
 
-.header-content h1{
-  font-size:50px;
-  margin-bottom:0;
-}
-
 .header-content p{
   font-size:1.5rem;
   display:block;
   padding-bottom:2rem;
 }
 
-.btn{
-  color:#fff;
-  font-size:1.2rem;
-  padding: 1rem 2rem;
-  text-decoration: none;
-}
-
-.section{
-  padding:20px 0;
-}
-
-.section-b{
-  background:#333;
-  color:#fff;
-}
-
 .logoAeon {
   width: 175%;
 }
 
-@media(max-width:960px){
-  .container{
-    padding-right:3rem;
-    padding-left:3rem;
-  }
-}
 </style>
