@@ -60,7 +60,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .loginCard {
   min-width: 250px;
   max-width: 500px;
