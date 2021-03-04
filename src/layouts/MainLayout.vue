@@ -16,13 +16,3 @@ export default {
   }
 }
 </script>
-
-<style lang="css" scoped>
-
-.my-card {
-  margin-top: 10%;
-  background-color:blue;
-  max-width: 500px;
-}
-
-</style>

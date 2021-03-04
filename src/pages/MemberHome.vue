@@ -1,11 +1,150 @@
 <template>
   <q-page class="constrain-more q-pa-md">
-    member home
+    <q-header class="bg-white" elevated>
+      <q-toolbar>
+        <q-toolbar-title>
+          <img class="logoAeon q-pt-sm" src="../assets/logo-aeon-space.png" />
+        </q-toolbar-title>
+
+        <q-btn
+          flat
+          dense
+          round
+          icon="menu"
+          aria-label="Menu"
+          color="primary"
+
+          @click="leftDrawerOpen = !leftDrawerOpen"
+        />
+
+      </q-toolbar>
+    </q-header>
+
+    <q-drawer
+      v-model="leftDrawerOpen"
+      show-if-above
+      bordered
+      content-class="bg-grey-1"
+    >
+      <q-list>
+        <q-item-label
+          header
+          class="text-grey-8 text-center"
+        >
+          Opções
+        </q-item-label>
+
+        <q-btn
+          unelevated
+          color="primary"
+          size="md"
+          class="full-width"
+          label="Inicial"
+          @click="managePageComponents('memberHome')"
+        />
+
+        <q-btn
+          unelevated
+          color="primary"
+          size="md"
+          class="full-width q-mt-md"
+          label="Perfil"
+          @click="managePageComponents('profile')"
+        />
+
+        <q-btn
+          unelevated
+          color="primary"
+          size="md"
+          class="full-width q-mt-md"
+          label="Campeonatos"
+          @click="managePageComponents('championship')"
+        />
+
+        <q-btn
+          unelevated
+          color="primary"
+          size="md"
+          class="full-width q-mt-md"
+          label="Rankings"
+          @click="managePageComponents('ranking')"
+        />
+
+        <q-btn
+          unelevated
+          color="grey"
+          size="md"
+          class="full-width q-mt-md text-grey-8"
+          label="Sair"
+          to="/"
+        />
+
+      </q-list>
+    </q-drawer>
+
+    <MemberHomeContent v-if="valuesToShowComponents[0].value" />
+    <ProfileContent v-if="valuesToShowComponents[1].value" />
+    <ChampionshipContent v-if="valuesToShowComponents[2].value" />
+    <RankingContent v-if="valuesToShowComponents[3].value" />
+
   </q-page>
 </template>
 
 <script>
+import MemberHomeContent from '../layouts/MemberHomeContent.vue'
+import ProfileContent from '../layouts/ProfileContent.vue'
+import ChampionshipContent from '../layouts/ChampionshipContent.vue'
+import RankingContent from '../layouts/RankingContent.vue'
+
 export default {
-  name: 'MemberHome'
+  name: 'MemberHome',
+  components: {
+    MemberHomeContent,
+    ProfileContent,
+    ChampionshipContent,
+    RankingContent
+  },
+  data () {
+    return {
+      leftDrawerOpen: false,
+      valuesToShowComponents: [
+        {
+          key: 'memberHome',
+          value: true
+        },
+        {
+          key: 'profile',
+          value: false
+        },
+        {
+          key: 'championship',
+          value: false
+        },
+        {
+          key: 'ranking',
+          value: false
+        }
+      ]
+    }
+  },
+  methods: {
+    managePageComponents (key) {
+      for (let i = 0; i < this.valuesToShowComponents.length; i++) {
+        if (key === this.valuesToShowComponents[i].key) {
+          this.valuesToShowComponents[i].value = true
+        } else {
+          this.valuesToShowComponents[i].value = false
+        }
+      }
+    }
+  }
 }
 </script>
+
+<style scoped>
+
+.logoAeon {
+  width: 250px;
+}
+
+</style>
