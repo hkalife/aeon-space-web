@@ -75,8 +75,17 @@
           color="grey"
           size="md"
           class="full-width q-mt-md text-grey-8"
+          label="Fechar barra de navegação"
+          @click="leftDrawerOpen = false"
+        />
+
+        <q-btn
+          unelevated
+          color="grey"
+          size="md"
+          class="full-width q-mt-md text-grey-8"
           label="Sair"
-          to="/"
+          @click="logOut()"
         />
 
       </q-list>
@@ -95,6 +104,7 @@ import MemberHomeContent from '../layouts/MemberHomeContent.vue'
 import ProfileContent from '../layouts/ProfileContent.vue'
 import ChampionshipContent from '../layouts/ChampionshipContent.vue'
 import RankingContent from '../layouts/RankingContent.vue'
+import firebase from 'firebase'
 
 export default {
   name: 'MemberHome',
@@ -136,6 +146,10 @@ export default {
           this.valuesToShowComponents[i].value = false
         }
       }
+    },
+    logOut () {
+      firebase.auth().signOut()
+      this.$router.push({ path: '/' })
     }
   }
 }
