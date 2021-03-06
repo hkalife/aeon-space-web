@@ -134,7 +134,8 @@ export default {
           key: 'ranking',
           value: false
         }
-      ]
+      ],
+      isAuthenticated: false
     }
   },
   methods: {
@@ -150,7 +151,20 @@ export default {
     logOut () {
       firebase.auth().signOut()
       this.$router.push({ path: '/' })
+    },
+    checkIfUserIsLogged () {
+      const self = this
+      firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+          self.isAuthenticated = true
+        } else {
+          self.$router.push({ path: 'login' })
+        }
+      })
     }
+  },
+  mounted () {
+    this.checkIfUserIsLogged()
   }
 }
 </script>
