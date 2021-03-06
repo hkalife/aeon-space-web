@@ -5,6 +5,7 @@
         <img class="logoAeon" src="../assets/logo-aeon-space.png" />
       </div>
       <q-card-section class="q-pt-lg">
+        <h5 class="q-mb-lg">Crie sua conta</h5>
         <q-form class="q-gutter-md">
           <q-input
             square
@@ -87,5 +88,11 @@ export default {
 .logoAeon {
   min-width: 200px;
   max-width: 400px;
+}
+
+h5 {
+  padding: 0px;
+  margin: 0 0 35px 0;
+  text-align: center;
 }
 </style>

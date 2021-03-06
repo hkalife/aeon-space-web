@@ -44,10 +44,17 @@
       <q-card-section class="text-center q-pb-sm">
         <q-btn
           unelevated
+          class="text-grey-8"
           size="md"
-          class="full-width text-grey-8"
           label="Crie sua conta"
           to="/create-account"
+        />
+        <q-btn
+          unelevated
+          class="q-ml-lg text-grey-8"
+          size="md"
+          label="Esqueceu sua senha?"
+          to="/retrieve-password"
         />
       </q-card-section>
     </q-card>
