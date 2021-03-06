@@ -8,18 +8,18 @@ const db = require('../firebaseDB')
 //routes
 router.get('/', (req, res) => {
   res.set('Access-Control-Allow-Origin', '*')
-  let users = []
-  db.collection('users').get().then(snapshot => {
+  let championships = []
+  db.collection('championships').get().then(snapshot => {
     snapshot.forEach((doc) => {
-      users.push(doc.data())
+      championships.push(doc.data())
     })
-    res.send(users)
+    res.send(championships)
   })
 })
 
 router.get('/:id', (req, res) => {
   res.set('Access-Control-Allow-Origin', '*')
-  db.collection('users').doc(req.params.id).get().then((response) => {
+  db.collection('championships').doc(req.params.id).get().then((response) => {
     res.send(response.data())
   });
 })
@@ -27,20 +27,20 @@ router.get('/:id', (req, res) => {
 router.post('/', jsonParser, (req, res) => {
   res.set('Access-Control-Allow-Origin', '*')
 
-  let newDoc = db.collection('users').doc()
-  const newUser = {
+  let newDoc = db.collection('championships').doc()
+  const newChampionship = {
     id: newDoc.id,
     ...req.body
   }
 
-  newDoc.set(newUser).then(() => {
-    res.send(newUser)
+  newDoc.set(newChampionship).then(() => {
+    res.send(newChampionship)
   })
 })
 
 router.put('/:id', jsonParser, (req, res) => {
   res.set('Access-Control-Allow-Origin', '*')
-  db.collection('users').doc(req.params.id).update(req.body).then(() => {
+  db.collection('championships').doc(req.params.id).update(req.body).then(() => {
     res.send(req.body)
   })
 })
