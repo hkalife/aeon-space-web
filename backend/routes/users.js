@@ -24,6 +24,17 @@ router.get('/:id', (req, res) => {
   });
 })
 
+router.get('/getByEmail/:email', (req, res) => {
+  res.set('Access-Control-Allow-Origin', '*')
+  let user = []
+  db.collection('users').where('email', '==', req.params.email).get().then((snapshot) => {
+    snapshot.forEach((doc) => {
+      user.push(doc.data())
+    })
+    res.send(user)
+  })
+})
+
 router.post('/', jsonParser, (req, res) => {
   res.set('Access-Control-Allow-Origin', '*')
 
