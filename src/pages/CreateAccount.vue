@@ -13,6 +13,7 @@
             clearable
             type="email"
             label="E-mail"
+            v-model="email"
           />
           <q-input
             square
@@ -20,6 +21,7 @@
             clearable
             type="username"
             label="Username"
+            v-model="username"
           />
           <q-input
             square
@@ -27,6 +29,7 @@
             clearable
             type="password"
             label="Senha"
+            v-model="password"
           />
           <q-select
             filled
@@ -38,12 +41,12 @@
       </q-card-section>
       <q-card-actions class="q-px-md">
         <q-btn
-          to="/member-home"
           unelevated
           color="primary"
           size="md"
           class="full-width"
           label="Cadastrar"
+          @click="createUser()"
         />
       </q-card-actions>
       <q-card-section class="text-center q-pb-sm">
@@ -60,13 +63,16 @@
 </template>
 
 <script>
+import firebase from 'firebase'
+import axios from 'axios'
 
 export default {
-  name: 'Login',
+  name: 'CreateAccount',
   data () {
     return {
-      // email: '',
-      // password: ''
+      email: '',
+      username: '',
+      password: '',
       choiceClass: null,
       classOptions: [
         'Niacoy',
@@ -74,6 +80,57 @@ export default {
         'Vahean',
         'Saxios'
       ]
+    }
+  },
+  methods: {
+    createUser () {
+      const self = this
+      firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
+        .then((user) => {
+          self.createUserInDatabase()
+        })
+        .catch((error) => {
+          self.$q.notify({
+            type: 'create-user-error',
+            icon: 'error',
+            progress: true,
+            color: 'red',
+            textColor: 'white',
+            message: `Ocorreu um erro. Verifique os dados digitados ou tente novamente mais tarde. (${error.code})`
+          })
+        })
+    },
+    createUserInDatabase () {
+      const objCreateUser = {
+        current_championships: [],
+        passed_championships: [],
+        username: this.username,
+        global_score: 0,
+        email: this.email,
+        championships_won: [],
+        class: this.choiceClass
+      }
+      axios.post('http://localhost:3000/users', objCreateUser).then(() =>
+        this.$q.notify({
+          type: 'create-user-sucess',
+          icon: 'success',
+          progress: true,
+          color: 'primary',
+          textColor: 'white',
+          message: 'Usuário criado. Verifique seu e-mail e confirme sua inscrição.'
+        }),
+      this.$router.push({ path: '/member-home' })
+      )
+        .catch((error) => {
+          this.$q.notify({
+            type: 'create-user-error',
+            icon: 'error',
+            progress: true,
+            color: 'red',
+            textColor: 'white',
+            message: `Ocorreu um erro. Verifique os dados digitados ou tente novamente mais tarde. (${error.code})`
+          })
+        })
     }
   }
 }
