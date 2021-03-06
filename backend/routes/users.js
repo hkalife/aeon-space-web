@@ -25,7 +25,6 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
   res.set('Access-Control-Allow-Origin', '*')
   db.collection('users').doc(req.params.id).get().then((response) => {
-    console.log(response.data())
     res.send(response.data())
   });
 })
@@ -33,8 +32,14 @@ router.get('/:id', (req, res) => {
 router.post('/', jsonParser, (req, res) => {
   res.set('Access-Control-Allow-Origin', '*')
 
-  db.collection('users').doc().set(req.body).then(() => {
-    res.send(req.body)
+  let newDoc = db.collection('users').doc()
+  const newUser = {
+    id: newDoc.id,
+    ...req.body
+  }
+
+  newDoc.set(newUser).then(() => {
+    res.send(newUser)
   })
 })
 
