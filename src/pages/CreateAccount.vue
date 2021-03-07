@@ -64,7 +64,6 @@
 
 <script>
 import firebase from 'firebase'
-// import axios from 'axios'
 import { mapState, mapActions } from 'vuex'
 
 export default {

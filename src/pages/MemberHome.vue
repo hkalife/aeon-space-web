@@ -27,6 +27,19 @@
       content-class="bg-grey-1"
     >
       <q-list>
+
+        <q-avatar class="q-mt-xl q-mb-lg imgAvatar" size="150px">
+          <img src="https://cdn.quasar.dev/img/avatar.png">
+        </q-avatar>
+
+        <div>
+          <h5 class="text-center text-h5 h5Username">{{ userInfo.username }}</h5>
+          <p class="text-center text-body2">{{ userInfo.email }}</p>
+          <p class="text-center text-body2">Escore global: {{ userInfo.global_score }}</p>
+        </div>
+
+        <div class="separationLine"></div>
+
         <q-item-label
           header
           class="text-grey-8 text-center"
@@ -105,6 +118,7 @@ import ProfileContent from '../layouts/ProfileContent.vue'
 import ChampionshipContent from '../layouts/ChampionshipContent.vue'
 import RankingContent from '../layouts/RankingContent.vue'
 import firebase from 'firebase'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'MemberHome',
@@ -135,10 +149,22 @@ export default {
           value: false
         }
       ],
-      isAuthenticated: false
+      isAuthenticated: false,
+      userInfo: {}
     }
   },
+  watch: {
+    user: function () {
+      this.userInfo = this.user
+    }
+  },
+  computed: {
+    ...mapState({
+      user: state => state.user.user
+    })
+  },
   methods: {
+    ...mapActions(['getSpecificUserUsingMail']),
     managePageComponents (key) {
       for (let i = 0; i < this.valuesToShowComponents.length; i++) {
         if (key === this.valuesToShowComponents[i].key) {
@@ -157,6 +183,7 @@ export default {
       firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
           self.isAuthenticated = true
+          self.getSpecificUserUsingMail(user.email)
         } else {
           self.$router.push({ path: 'login' })
         }
@@ -173,6 +200,23 @@ export default {
 
 .logoAeon {
   width: 250px;
+}
+
+.imgAvatar {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.h5Username {
+  margin-top: 0px;
+  margin-bottom: 5px;
+}
+
+.separationLine {
+  height: 1px;
+  background-color:#DCDCDC;
+  margin: 20px 20px 10px 20px;
 }
 
 </style>

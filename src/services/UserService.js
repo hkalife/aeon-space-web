@@ -12,6 +12,9 @@ const urlSettings = {
 const apiClient = axios.create(urlSettings)
 
 export default {
+  getUserByEmail (userMail) {
+    return apiClient.get(`/users/getByEmail/${userMail}`)
+  },
   postUser (userData) {
     return apiClient.post('/users', userData)
   }

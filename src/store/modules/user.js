@@ -11,6 +11,13 @@ export const mutations = {
 }
 
 export const actions = {
+  async getSpecificUserUsingMail ({ commit }, userMail) {
+    return UserService.getUserByEmail(userMail).then((response) => {
+      commit('SET_USER', response.data[0])
+    }).catch(error => {
+      throw error
+    })
+  },
   async createUser ({ commit }, user) {
     return UserService.postUser(user).then((response) => {
       commit('SET_USER', response.data)
