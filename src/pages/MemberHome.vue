@@ -29,7 +29,10 @@
       <q-list>
 
         <q-avatar class="q-mt-xl q-mb-lg imgAvatar" size="150px">
-          <img src="https://cdn.quasar.dev/img/avatar.png">
+          <q-img
+            :src="userInfo.photo"
+            :ratio="1"
+          />
         </q-avatar>
 
         <div>

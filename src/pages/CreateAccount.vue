@@ -32,10 +32,21 @@
             v-model="password"
           />
           <q-select
+            square
             filled
             v-model="choiceClass"
             :options="classOptions"
             label="Selecione sua classe"
+          />
+          <q-file
+            square
+            filled
+            v-model="imageUploadInput"
+            style="width: 95.75%;"
+            label="Imagem de perfil (máx. 1MB)"
+            max-files="1"
+            accept="image/jpg, image/jpeg, image/png"
+            @rejected="onRejectedImage"
           />
         </q-form>
       </q-card-section>
@@ -65,6 +76,7 @@
 <script>
 import firebase from 'firebase'
 import { mapState, mapActions } from 'vuex'
+import { uuid } from 'uuidv4'
 
 export default {
   name: 'CreateAccount',
@@ -79,7 +91,14 @@ export default {
         'Xeosor',
         'Vahean',
         'Saxios'
-      ]
+      ],
+      imageUploadInput: null,
+      blobImageToSend: null
+    }
+  },
+  watch: {
+    imageUploadInput: function () {
+      this.blobImageToSend = new Blob([this.imageUploadInput], { type: 'image/*' })
     }
   },
   computed: {
@@ -107,6 +126,14 @@ export default {
         })
     },
     createUserInDatabase () {
+      const id = uuid()
+      const metadata = {
+        token: id
+      }
+      const photoName = `userphoto-${id}`
+      const storageRef = firebase.storage().ref().child(photoName)
+      storageRef.put(this.imageUploadInput, metadata)
+
       const objCreateUser = {
         current_championships: [],
         passed_championships: [],
@@ -114,7 +141,8 @@ export default {
         global_score: 0,
         email: this.email,
         championships_won: [],
-        class: this.choiceClass
+        class: this.choiceClass,
+        photo: `https://firebasestorage.googleapis.com/v0/b/aeon-space.appspot.com/o/${photoName}?alt=media`
       }
 
       this.createUser(objCreateUser).then(() => {
@@ -126,7 +154,7 @@ export default {
           textColor: 'white',
           message: 'Usuário criado. Verifique seu e-mail e confirme sua inscrição.'
         })
-        this.$router.push({ path: '/member-home' })
+        this.$router.push({ path: '/login' })
       }).catch((error) => {
         this.$q.notify({
           type: 'create-user-error',
@@ -136,6 +164,12 @@ export default {
           textColor: 'white',
           message: `Ocorreu um erro. Verifique os dados digitados ou tente novamente mais tarde. (${error.code})`
         })
+      })
+    },
+    onRejectedImage () {
+      this.$q.notify({
+        type: 'negative',
+        message: 'Imagem inválida.'
       })
     }
   }
