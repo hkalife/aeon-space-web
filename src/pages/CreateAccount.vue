@@ -46,7 +46,7 @@
           size="md"
           class="full-width"
           label="Cadastrar"
-          @click="createUser()"
+          @click="createUserForAuthentication()"
         />
       </q-card-actions>
       <q-card-section class="text-center q-pb-sm">
@@ -64,7 +64,8 @@
 
 <script>
 import firebase from 'firebase'
-import axios from 'axios'
+// import axios from 'axios'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'CreateAccount',
@@ -82,8 +83,14 @@ export default {
       ]
     }
   },
+  computed: {
+    ...mapState({
+      user: state => state.user
+    })
+  },
   methods: {
-    createUser () {
+    ...mapActions(['createUser']),
+    createUserForAuthentication () {
       const self = this
       firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
         .then((user) => {
@@ -110,7 +117,8 @@ export default {
         championships_won: [],
         class: this.choiceClass
       }
-      axios.post('http://localhost:3000/users', objCreateUser).then(() =>
+
+      this.createUser(objCreateUser).then(() => {
         this.$q.notify({
           type: 'create-user-sucess',
           icon: 'success',
@@ -118,19 +126,18 @@ export default {
           color: 'primary',
           textColor: 'white',
           message: 'Usuário criado. Verifique seu e-mail e confirme sua inscrição.'
-        }),
-      this.$router.push({ path: '/member-home' })
-      )
-        .catch((error) => {
-          this.$q.notify({
-            type: 'create-user-error',
-            icon: 'error',
-            progress: true,
-            color: 'red',
-            textColor: 'white',
-            message: `Ocorreu um erro. Verifique os dados digitados ou tente novamente mais tarde. (${error.code})`
-          })
         })
+        this.$router.push({ path: '/member-home' })
+      }).catch((error) => {
+        this.$q.notify({
+          type: 'create-user-error',
+          icon: 'error',
+          progress: true,
+          color: 'red',
+          textColor: 'white',
+          message: `Ocorreu um erro. Verifique os dados digitados ou tente novamente mais tarde. (${error.code})`
+        })
+      })
     }
   }
 }
