@@ -154,7 +154,7 @@ export default {
       ],
       isAuthenticated: false,
       userInfo: {},
-      unknownUser: 'https://firebasestorage.googleapis.com/v0/b/aeon-space.appspot.com/o/unknown.png?alt=media&token=50e27a7a-6ad3-46b6-9992-5c6656bccfcd'
+      unknownUser: 'https://firebasestorage.googleapis.com/v0/b/aeon-space.appspot.com/o/unknown.png?alt=media'
     }
   },
   watch: {
