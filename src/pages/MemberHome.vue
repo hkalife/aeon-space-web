@@ -30,7 +30,7 @@
 
         <q-avatar class="q-mt-xl q-mb-lg imgAvatar" size="150px">
           <q-img
-            :src="userInfo.photo"
+            :src="userInfo.photo !== null ? userInfo.photo : unknownUser"
             :ratio="1"
           />
         </q-avatar>
@@ -153,7 +153,8 @@ export default {
         }
       ],
       isAuthenticated: false,
-      userInfo: {}
+      userInfo: {},
+      unknownUser: 'https://firebasestorage.googleapis.com/v0/b/aeon-space.appspot.com/o/unknown.png?alt=media&token=50e27a7a-6ad3-46b6-9992-5c6656bccfcd'
     }
   },
   watch: {

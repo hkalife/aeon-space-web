@@ -14,6 +14,8 @@
             type="email"
             label="E-mail"
             v-model="email"
+            error-message="Campo obrigatório"
+            :error="!isValid"
           />
           <q-input
             square
@@ -22,6 +24,8 @@
             type="username"
             label="Username"
             v-model="username"
+            error-message="Campo obrigatório"
+            :error="!isValid"
           />
           <q-input
             square
@@ -30,6 +34,8 @@
             type="password"
             label="Senha"
             v-model="password"
+            error-message="Campo obrigatório"
+            :error="!isValid"
           />
           <q-select
             square
@@ -37,6 +43,8 @@
             v-model="choiceClass"
             :options="classOptions"
             label="Selecione sua classe"
+            error-message="Campo obrigatório"
+            :error="!isValid"
           />
           <q-file
             square
@@ -57,7 +65,7 @@
           size="md"
           class="full-width"
           label="Cadastrar"
-          @click="createUserForAuthentication()"
+          @click="validationForCreation()"
         />
       </q-card-actions>
       <q-card-section class="text-center q-pb-sm">
@@ -93,7 +101,8 @@ export default {
         'Saxios'
       ],
       imageUploadInput: null,
-      blobImageToSend: null
+      blobImageToSend: null,
+      isValid: true
     }
   },
   watch: {
@@ -131,8 +140,10 @@ export default {
         token: id
       }
       const photoName = `userphoto-${id}`
-      const storageRef = firebase.storage().ref().child(photoName)
-      storageRef.put(this.imageUploadInput, metadata)
+      if (this.imageUploadInput !== null) {
+        const storageRef = firebase.storage().ref().child(photoName)
+        storageRef.put(this.imageUploadInput, metadata)
+      }
 
       const objCreateUser = {
         current_championships: [],
@@ -142,7 +153,7 @@ export default {
         email: this.email,
         championships_won: [],
         class: this.choiceClass,
-        photo: `https://firebasestorage.googleapis.com/v0/b/aeon-space.appspot.com/o/${photoName}?alt=media`
+        photo: this.imageUploadInput !== null ? `https://firebasestorage.googleapis.com/v0/b/aeon-space.appspot.com/o/${photoName}?alt=media` : this.imageUploadInput
       }
 
       this.createUser(objCreateUser).then(() => {
@@ -171,6 +182,18 @@ export default {
         type: 'negative',
         message: 'Imagem inválida.'
       })
+    },
+    validationForCreation () {
+      if (this.email === '' || this.password === '' || this.username === '' || this.choiceClass === '') {
+        this.isValid = false
+        this.$q.notify({
+          type: 'negative',
+          message: 'Por favor, preencha os campos obrigatórios.'
+        })
+      } else {
+        this.isValid = true
+        this.createUserForAuthentication()
+      }
     }
   }
 }
