@@ -17,5 +17,8 @@ export default {
   },
   postUser (userData) {
     return apiClient.post('/users', userData)
+  },
+  putUser (userData) {
+    return apiClient.put(`/users/${userData.id}`, userData)
   }
 }

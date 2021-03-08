@@ -24,6 +24,13 @@ export const actions = {
     }).catch(error => {
       throw error
     })
+  },
+  async updateUser ({ commit }, user) {
+    return UserService.putUser(user).then((response) => {
+      commit('SET_USER', response.data)
+    }).catch(error => {
+      throw error
+    })
   }
 }
 

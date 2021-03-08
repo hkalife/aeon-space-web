@@ -30,15 +30,16 @@
 
         <q-avatar class="q-mt-xl q-mb-lg imgAvatar" size="150px">
           <q-img
-            :src="userInfo.photo !== null ? userInfo.photo : unknownUser"
+            :src="user.photo !== null ? user.photo : unknownUser"
             :ratio="1"
+            :key="user.photo"
           />
         </q-avatar>
 
         <div>
-          <h5 class="text-center text-h5 h5Username">{{ userInfo.username }}</h5>
-          <p class="text-center text-body2">{{ userInfo.email }}</p>
-          <p class="text-center text-body2">Escore global: {{ userInfo.global_score }}</p>
+          <h5 class="text-center text-h5 h5Username">{{ user.username }}</h5>
+          <p class="text-center text-body2">{{ user.email }}</p>
+          <p class="text-center text-body2">Escore global: {{ user.global_score }}</p>
         </div>
 
         <div class="separationLine"></div>
@@ -153,13 +154,7 @@ export default {
         }
       ],
       isAuthenticated: false,
-      userInfo: {},
       unknownUser: 'https://firebasestorage.googleapis.com/v0/b/aeon-space.appspot.com/o/unknown.png?alt=media'
-    }
-  },
-  watch: {
-    user: function () {
-      this.userInfo = this.user
     }
   },
   computed: {
