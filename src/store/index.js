@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import firebase from 'firebase/app'
 import * as user from './modules/user.js'
+import * as championship from './modules/championship.js'
 
 // import example from './module-example'
 
@@ -32,7 +33,8 @@ firebase.initializeApp(firebaseConfig)
 export default function (/* { ssrContext } */) {
   const Store = new Vuex.Store({
     modules: {
-      user
+      user,
+      championship
     },
 
     // enable strict mode (adds overhead!)

@@ -13,6 +13,7 @@
     "@quasar/extras": "^1.0.0",
     "axios": "^0.18.1",
     "core-js": "^3.6.5",
+    "date-fns": "^2.19.0",
     "firebase": "^8.2.10",
     "quasar": "^1.0.0",
     "uuidv4": "^6.2.6"

@@ -74,6 +74,8 @@
         class="q-ma-md loadingCircle"
       />
     </div>
+    <div class="profileDivision"></div>
+    <MyChampionships />
   </q-page>
 </template>
 
@@ -81,6 +83,7 @@
 import { mapState, mapActions } from 'vuex'
 import firebase from 'firebase'
 import { uuid } from 'uuidv4'
+import MyChampionships from './MyChampionships.vue'
 
 export default {
   name: 'ProfileContent',
@@ -91,6 +94,9 @@ export default {
       imageUploadInput: null,
       showLoading: false
     }
+  },
+  components: {
+    MyChampionships
   },
   computed: {
     ...mapState({
@@ -198,6 +204,7 @@ export default {
 
 .imgProfile {
   max-width: 10%;
+  min-width: 100px;
   display: block;
   margin-left: auto;
   margin-right: auto;
@@ -212,6 +219,12 @@ export default {
   display: block;
   margin-left: auto;
   margin-right: auto;
+}
+
+.profileDivision {
+  height: 1px;
+  background-color:#DCDCDC;
+  margin-top: 40px;
 }
 
 </style>
