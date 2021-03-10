@@ -1,6 +1,6 @@
 <template>
   <q-page class="constrain-more q-pa-md">
-    <h5 class="text-center text-h5 h5Username">Meus campeonatos correntes</h5>
+    <h5 class="text-center text-h5">Meus campeonatos atuais</h5>
 
     <div class="row col-md-10 offset-md-2 wholeChampionships">
       <div class="col-md-2 mapChampionships" v-for="championship in currentChampionships" :key="championship.id">
@@ -48,9 +48,10 @@ export default {
     }
   },
   mounted () {
-    let championship
-    for (championship of this.user.current_championships) {
-      this.getSpecificCurrentChampionshipUsingId(championship.championship_id)
+    if (this.user.current_championships.length > this.currentChampionships.length) {
+      for (const championship of this.user.current_championships) {
+        this.getSpecificCurrentChampionshipUsingId(championship.championship_id)
+      }
     }
   }
 }
