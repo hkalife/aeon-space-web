@@ -172,6 +172,9 @@ export default {
           this.valuesToShowComponents[i].value = false
         }
       }
+      if (screen.width < 1000) {
+        this.leftDrawerOpen = false
+      }
     },
     logOut () {
       firebase.auth().signOut()

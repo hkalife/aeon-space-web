@@ -21,7 +21,6 @@ export const mutations = {
 export const actions = {
   async getSpecificChampionshipUsingId ({ commit }, championshipId, originForState) {
     return ChampionshipService.getChampionshipById(championshipId).then((response) => {
-      console.log(originForState)
       if (originForState === 'current') {
         commit('SET_CURRENT_CHAMPIONSHIPS', response.data)
       } else if (originForState === 'passed') {

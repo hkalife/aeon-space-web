@@ -14,5 +14,17 @@ const apiClient = axios.create(urlSettings)
 export default {
   getGlobalRanking () {
     return apiClient.get('/rankings/global')
+  },
+  getNiacoyRanking () {
+    return apiClient.get('/rankings/niacoy')
+  },
+  getXeosorRanking () {
+    return apiClient.get('/rankings/xeosor')
+  },
+  getVaheanRanking () {
+    return apiClient.get('/rankings/vahean')
+  },
+  getSaxiosRanking () {
+    return apiClient.get('/rankings/saxios')
   }
 }
