@@ -14,5 +14,8 @@ const apiClient = axios.create(urlSettings)
 export default {
   getChampionshipById (championshipId) {
     return apiClient.get(`/championships/${championshipId}`)
+  },
+  getByState (state) {
+    return apiClient.get(`/championships/bystate/${state}`)
   }
 }

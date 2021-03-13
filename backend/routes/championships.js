@@ -17,6 +17,17 @@ router.get('/', (req, res) => {
   })
 })
 
+router.get('/bystate/:state', (req, res) => {
+  res.set('Access-Control-Allow-Origin', '*')
+  let championships = []
+  db.collection('championships').where('state', '==', req.params.state).limit(100).get().then(snapshot => {
+    snapshot.forEach((doc) => {
+      championships.push(doc.data())
+    })
+    res.send(championships)
+  })
+})
+
 router.get('/:id', (req, res) => {
   res.set('Access-Control-Allow-Origin', '*')
   db.collection('championships').doc(req.params.id).get().then((response) => {

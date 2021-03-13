@@ -3,7 +3,8 @@ import ChampionshipService from '../../services/ChampionshipService.js'
 export const state = {
   currentChampionships: [],
   passedChampionships: [],
-  championshipsWon: []
+  championshipsWon: [],
+  allCurrent: []
 }
 
 export const mutations = {
@@ -15,10 +16,20 @@ export const mutations = {
   },
   SET_CHAMPIONSHIPS_WON (state, championshipsWon) {
     state.championshipsWon = state.championshipsWon.concat(championshipsWon)
+  },
+  SET_ALL_CURRENT (state, allCurrent) {
+    state.allCurrent = allCurrent
   }
 }
 
 export const actions = {
+  async searchByState ({ commit }, state) {
+    return ChampionshipService.getByState(state).then((response) => {
+      commit('SET_ALL_CURRENT', response.data)
+    }).catch(error => {
+      throw error
+    })
+  },
   async getSpecificChampionshipUsingId ({ commit }, championshipId, originForState) {
     return ChampionshipService.getChampionshipById(championshipId).then((response) => {
       if (originForState === 'current') {
