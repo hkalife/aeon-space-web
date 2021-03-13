@@ -78,9 +78,7 @@ router.put('/unsubscribe/:id', jsonParser, (req, res) => {
     const championship = response.data()
     let index = 0
     for (const player of championship.players) {
-      console.log(player)
       if (player.user_id === req.body.user_id) {
-        console.log("******* CHEGOU AQUI *******")
         championship.players.splice(index, 1)
       }
       index++
