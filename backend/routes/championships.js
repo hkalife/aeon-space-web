@@ -45,4 +45,30 @@ router.put('/:id', jsonParser, (req, res) => {
   })
 })
 
+router.put('/subscribe/:id', jsonParser, (req, res) => {
+  res.set('Access-Control-Allow-Origin', '*')
+
+  db.collection('championships').doc(req.params.id).get().then((response) => {
+    const championship = response.data()
+
+    const newPlayer = {
+      user_id: req.body.user_id,
+      username: req.body.username,
+      score: 0,
+    }
+
+    const newPlayersData = championship.players
+    newPlayersData.push(newPlayer)
+
+    const newPayloadForChampionship = {
+      ...championship,
+      players: newPlayersData
+    }
+
+    db.collection('championships').doc(req.params.id).update(newPayloadForChampionship).then(() => {
+      res.send(newPayloadForChampionship)
+    })
+  })
+})
+
 module.exports = router
