@@ -17,5 +17,11 @@ export default {
   },
   getByState (state) {
     return apiClient.get(`/championships/bystate/${state}`)
+  },
+  putSubscribe (userToSubscribe, championshipToDetail) {
+    return apiClient.put(`/championships/subscribe/${championshipToDetail.id}`, userToSubscribe)
+  },
+  putUnsubscribe (userToUnsubscribe, championshipToDetail) {
+    return apiClient.put(`/championships/unsubscribe/${championshipToDetail.id}`, userToUnsubscribe)
   }
 }
