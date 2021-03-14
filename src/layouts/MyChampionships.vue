@@ -19,6 +19,7 @@
           <q-card-section>
             <div class="text-p text-center">Começo: {{ parseDate(championship.start_date) }}</div>
             <div class="text-p text-center">Fim: {{ parseDate(championship.end_date) }}</div>
+            <div class="text-p text-center text-bold">Pontuação: {{ parseScore(championship) }}</div>
           </q-card-section>
         </q-card>
       </div>
@@ -45,6 +46,13 @@ export default {
     ...mapActions(['getSpecificCurrentChampionshipUsingId']),
     parseDate (milliseconds) {
       return date.formatDate(milliseconds, 'DD/MM/YYYY')
+    },
+    parseScore (thisChampionship) {
+      for (const player of thisChampionship.players) {
+        if (player.user_id === this.user.id) {
+          return player.score
+        }
+      }
     }
   },
   mounted () {
