@@ -70,5 +70,6 @@ export default {
 .wholeChampionships {
   display: flex;
   justify-content: center;
+  justify-content: space-evenly;
 }
 </style>
