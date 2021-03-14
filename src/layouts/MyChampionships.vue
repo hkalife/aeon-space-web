@@ -44,7 +44,7 @@ export default {
   methods: {
     ...mapActions(['getSpecificCurrentChampionshipUsingId']),
     parseDate (milliseconds) {
-      return date.formatDate(milliseconds, 'DD/MM HH:MM')
+      return date.formatDate(milliseconds, 'DD/MM/YYYY')
     }
   },
   mounted () {
