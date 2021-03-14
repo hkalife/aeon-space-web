@@ -4,7 +4,8 @@ export const state = {
   currentChampionships: [],
   passedChampionships: [],
   championshipsWon: [],
-  allCurrent: []
+  allCurrent: [],
+  allPassed: []
 }
 
 export const mutations = {
@@ -22,13 +23,20 @@ export const mutations = {
   },
   SET_ALL_CURRENT (state, allCurrent) {
     state.allCurrent = allCurrent
+  },
+  SET_ALL_PASSED (state, allPassed) {
+    state.allPassed = allPassed
   }
 }
 
 export const actions = {
   async searchByState ({ commit }, state) {
     return ChampionshipService.getByState(state).then((response) => {
-      commit('SET_ALL_CURRENT', response.data)
+      if (state === 'current') {
+        commit('SET_ALL_CURRENT', response.data)
+      } else if (state === 'passed') {
+        commit('SET_ALL_PASSED', response.data)
+      }
     }).catch(error => {
       throw error
     })
