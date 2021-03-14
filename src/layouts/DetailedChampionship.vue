@@ -7,9 +7,9 @@
       size="md"
       @click="goBackToChampionships()"
     />
-    <h5 class="text-center text-h5 col-md-10 col-sm-10 titleChampionship">
+    <h4 class="text-center text-h4 col-md-10 col-sm-10 titleChampionship">
       {{ championshipToDetail.championship_name }}
-    </h5>
+    </h4>
 
     <div class="row col-md-10 offset-md-2 wholeChampionships">
       <q-card class="championshipCard col-md-10 col-sm-10">
@@ -44,6 +44,16 @@
       </q-card>
     </div>
 
+    <h5 class="text-center text-h6 subRanking">Ranking atual</h5>
+
+    <q-table
+      :data="parsedRanking"
+      :columns="columns"
+      row-key="indexForTable"
+      class="q-mt-lg"
+      hide-bottom
+    />
+
   </q-page>
 </template>
 
@@ -59,7 +69,17 @@ export default {
   data () {
     return {
       userIsSubscribed: false,
-      payloadUser: {}
+      payloadUser: {},
+      parsedRanking: [],
+      columns: [
+        { name: 'indexForTable', label: '#', field: 'indexForTable', align: 'left' },
+        { name: 'user', label: 'User', field: 'username', align: 'left' },
+        { name: 'class', label: 'Classe', field: 'class', align: 'center' },
+        { name: 'championships_won', label: 'Qde. campeonatos ganhos', field: 'amountOfWonChampionships', align: 'center' },
+        { name: 'current_championships', label: 'Qde. campeonatos atuais', field: 'amountOfCurrentChampionships', align: 'center' },
+        { name: 'passed_championships', label: 'Qde. participação em campeonatos', field: 'amountOfPassedChampionships', align: 'center' },
+        { name: 'score', label: 'Pontuação', field: 'global_score', align: 'center' }
+      ]
     }
   },
   computed: {
@@ -192,6 +212,11 @@ export default {
 
 .divButton {
   margin: 2.5% 20% 0 20%;
+}
+
+.subRanking {
+  margin-top: 50px;
+  margin-bottom: 0px;
 }
 
 </style>

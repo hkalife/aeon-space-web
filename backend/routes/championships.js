@@ -32,7 +32,41 @@ router.get('/:id', (req, res) => {
   res.set('Access-Control-Allow-Origin', '*')
   db.collection('championships').doc(req.params.id).get().then((response) => {
     res.send(response.data())
-  });
+  })
+})
+
+function compare( a, b ) {
+  if ( a.score < b.score ){
+    return 1;
+  }
+  if ( a.score > b.score ){
+    return -1;
+  }
+  return 0;
+}
+
+async function getUserDetailedList (playerList) {
+  var i = 0
+  for (const player of playerList) {
+    db.collection('users').doc(player.user_id).get().then((response) => {
+      playerList[i] = response.data()
+    })
+    i++
+  }
+  return playerList
+}
+
+router.get('/ranking/:id', (req, res) => {
+  res.set('Access-Control-Allow-Origin', '*')
+  db.collection('championships').doc(req.params.id).get().then((response) => {
+    let playerList = response.data().players
+
+    getUserDetailedList(playerList).then((retornoDetalhado) => {
+      playerList = retornoDetalhado
+      playerList.sort(compare)
+    })   
+    res.send(playerList)
+  })
 })
 
 router.post('/', jsonParser, (req, res) => {
