@@ -26,5 +26,9 @@ export default {
   },
   getSaxiosRanking () {
     return apiClient.get('/rankings/saxios')
+  },
+  getRankingForChampionship (id) {
+    console.log('ma oeeeeee')
+    return apiClient.get(`/championships/ranking/${id}`)
   }
 }

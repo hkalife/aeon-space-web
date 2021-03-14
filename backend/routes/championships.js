@@ -45,26 +45,12 @@ function compare( a, b ) {
   return 0;
 }
 
-async function getUserDetailedList (playerList) {
-  var i = 0
-  for (const player of playerList) {
-    db.collection('users').doc(player.user_id).get().then((response) => {
-      playerList[i] = response.data()
-    })
-    i++
-  }
-  return playerList
-}
-
 router.get('/ranking/:id', (req, res) => {
   res.set('Access-Control-Allow-Origin', '*')
   db.collection('championships').doc(req.params.id).get().then((response) => {
     let playerList = response.data().players
+    playerList.sort(compare)
 
-    getUserDetailedList(playerList).then((retornoDetalhado) => {
-      playerList = retornoDetalhado
-      playerList.sort(compare)
-    })   
     res.send(playerList)
   })
 })
@@ -96,9 +82,12 @@ router.put('/subscribe/:id', jsonParser, (req, res) => {
   db.collection('championships').doc(req.params.id).get().then((response) => {
     const championship = response.data()
 
+    console.log(req.body)
+
     const newPlayer = {
       user_id: req.body.user_id,
       username: req.body.username,
+      class: req.body.class,
       score: 0,
     }
 

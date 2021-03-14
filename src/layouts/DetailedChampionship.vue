@@ -36,7 +36,7 @@
             size="md"
             label="Desinscrever"
             class="full-width q-mt-xl"
-            @click="unsubscribeUserToChampionship(championshipToDetail)"
+            @click="showConfirmUnsubscribe = true"
           />
         </div>
         <h5 class="text-center text-h6">Começo: {{ parseDate(championshipToDetail.start_date) }}</h5>
@@ -46,19 +46,61 @@
 
     <h5 class="text-center text-h6 subRanking">Ranking atual</h5>
 
-    <q-table
-      :data="parsedRanking"
-      :columns="columns"
-      row-key="indexForTable"
-      class="q-mt-lg"
-      hide-bottom
-    />
+    <div class="contentTableRanking">
+      <q-table
+        :data="ranking"
+        :columns="columns"
+        row-key="indexForTable"
+        class="q-mt-lg tableRankingChampionship"
+        hide-bottom
+        v-if="ranking.length > 0"
+      />
+      <div class="text-center text-h6 subRanking" color="red" v-if="ranking.length === 0 && loadingRanking === false">
+        Não existem jogadores inscritos. Seja o primeiro!
+      </div>
+      <div class="row items-center justify-center">
+        <q-circular-progress
+          indeterminate
+          size="50px"
+          color="primary"
+          class="q-ma-md"
+          v-if="loadingRanking"
+        />
+      </div>
+    </div>
+
+    <q-dialog v-model="showConfirmUnsubscribe" persistent>
+      <q-card>
+        <q-card-section class="row items-center">
+          <q-avatar icon="warning" color="primary" text-color="white" />
+          <span class="q-ml-md text-h6">Você tem certeza?</span>
+          <span class="q-ml-sm q-mt-md">Você irá perder toda sua pontuação e, caso queira reingressar no campeonato, não poderá recuperar.</span>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn
+            flat
+            label="Cancelar"
+            color="primary"
+            v-close-popup
+          />
+          <q-btn
+            flat
+            label="Sim, quero me desinscrever"
+            color="primary"
+            v-close-popup
+            @click="unsubscribeUserToChampionship(championshipToDetail)"
+          />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
 
   </q-page>
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex'
+import RankingsService from '../services/RankingsService.js'
 import { date } from 'quasar'
 
 export default {
@@ -75,11 +117,11 @@ export default {
         { name: 'indexForTable', label: '#', field: 'indexForTable', align: 'left' },
         { name: 'user', label: 'User', field: 'username', align: 'left' },
         { name: 'class', label: 'Classe', field: 'class', align: 'center' },
-        { name: 'championships_won', label: 'Qde. campeonatos ganhos', field: 'amountOfWonChampionships', align: 'center' },
-        { name: 'current_championships', label: 'Qde. campeonatos atuais', field: 'amountOfCurrentChampionships', align: 'center' },
-        { name: 'passed_championships', label: 'Qde. participação em campeonatos', field: 'amountOfPassedChampionships', align: 'center' },
-        { name: 'score', label: 'Pontuação', field: 'global_score', align: 'center' }
-      ]
+        { name: 'score', label: 'Pontuação', field: 'score', align: 'center' }
+      ],
+      ranking: [],
+      showConfirmUnsubscribe: false,
+      loadingRanking: true
     }
   },
   computed: {
@@ -120,6 +162,7 @@ export default {
           })
           this.userIsSubscribed = true
           this.getSpecificUserUsingMail(this.user.email)
+          this.reloadRanking()
         }).catch(() => {
           this.$q.notify({
             type: 'negative',
@@ -162,6 +205,7 @@ export default {
             message: 'Inscrição cancelada!'
           })
           this.userIsSubscribed = false
+          this.reloadRanking()
         })
       }).catch(() => {
         this.$q.notify({
@@ -169,6 +213,20 @@ export default {
           icon: 'error',
           message: 'Ocorreu um erro. Tente novamente.'
         })
+      })
+    },
+    reloadRanking () {
+      this.loadingRanking = true
+      RankingsService.getRankingForChampionship(this.championshipToDetail.id).then((response) => {
+        this.ranking = response.data
+
+        for (let i = 0; i < response.data.length; i++) {
+          this.ranking[i] = {
+            ...this.ranking[i],
+            indexForTable: i + 1
+          }
+        }
+        this.loadingRanking = false
       })
     }
   },
@@ -181,8 +239,11 @@ export default {
 
     this.payloadUser = {
       user_id: this.user.id,
-      username: this.user.username
+      username: this.user.username,
+      class: this.user.class
     }
+
+    this.reloadRanking()
   }
 }
 </script>
@@ -217,6 +278,14 @@ export default {
 .subRanking {
   margin-top: 50px;
   margin-bottom: 0px;
+}
+
+.tableRankingChampionship {
+  max-width: 1000px;
+}
+
+.contentTableRanking {
+  text-align: -webkit-center;
 }
 
 </style>
