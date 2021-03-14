@@ -53,13 +53,23 @@
       v-if="currentMenu === 'Global' && parsedTopRanking.length > 0"
     />
     <q-card
-      v-if="currentMenu === 'Global' && parsedTopRanking.length === 0"
+      v-if="currentMenu === 'Global' && parsedTopRanking.length === 0 && loading === false"
     >
       <q-card-section class="cardSection">
-        <q-icon name="warning" class="text-red" style="font-size: 15rem;" />
+        <q-icon name="warning" class="text-red" style="font-size: 12rem;" />
       </q-card-section>
       <h5 class="text-center text-h5 titleRanking q-pb-lg">Houve um erro ao carregar a lista. Tente novamente.</h5>
     </q-card>
+
+    <div class="row items-center justify-center">
+      <q-circular-progress
+        indeterminate
+        size="50px"
+        color="primary"
+        class="q-ma-md"
+        v-if="loading"
+      />
+    </div>
 
     <q-table
       :data="parsedNiacoyRanking"
@@ -69,10 +79,10 @@
       v-if="currentMenu === 'Niacoy' && parsedNiacoyRanking.length > 0"
     />
     <q-card
-      v-if="currentMenu === 'Niacoy' && parsedNiacoyRanking.length === 0"
+      v-if="currentMenu === 'Niacoy' && parsedNiacoyRanking.length === 0 && loading === false"
     >
       <q-card-section class="cardSection">
-        <q-icon name="warning" class="text-red" style="font-size: 15rem;" />
+        <q-icon name="warning" class="text-red" style="font-size: 12rem;" />
       </q-card-section>
       <h5 class="text-center text-h5 titleRanking q-pb-lg">Houve um erro ao carregar a lista. Tente novamente.</h5>
     </q-card>
@@ -85,10 +95,10 @@
       v-if="currentMenu === 'Xeosor' && parsedXeosorRanking.length > 0"
     />
     <q-card
-      v-if="currentMenu === 'Xeosor' && parsedXeosorRanking.length === 0"
+      v-if="currentMenu === 'Xeosor' && parsedXeosorRanking.length === 0 && loading === false"
     >
       <q-card-section class="cardSection">
-        <q-icon name="warning" class="text-red" style="font-size: 15rem;" />
+        <q-icon name="warning" class="text-red" style="font-size: 12rem;" />
       </q-card-section>
       <h5 class="text-center text-h5 titleRanking q-pb-lg">Houve um erro ao carregar a lista. Tente novamente.</h5>
     </q-card>
@@ -101,10 +111,10 @@
       v-if="currentMenu === 'Vahean' && parsedVaheanRanking.length > 0"
     />
     <q-card
-      v-if="currentMenu === 'Vahean' && parsedVaheanRanking.length === 0"
+      v-if="currentMenu === 'Vahean' && parsedVaheanRanking.length === 0 && loading === false"
     >
       <q-card-section class="cardSection">
-        <q-icon name="warning" class="text-red" style="font-size: 15rem;" />
+        <q-icon name="warning" class="text-red" style="font-size: 12rem;" />
       </q-card-section>
       <h5 class="text-center text-h5 titleRanking q-pb-lg">Houve um erro ao carregar a lista. Tente novamente.</h5>
     </q-card>
@@ -117,10 +127,10 @@
       v-if="currentMenu === 'Saxios' && parsedSaxiosRanking.length > 0"
     />
     <q-card
-      v-if="currentMenu === 'Saxios' && parsedSaxiosRanking.length === 0"
+      v-if="currentMenu === 'Saxios' && parsedSaxiosRanking.length === 0 && loading === false"
     >
       <q-card-section class="cardSection">
-        <q-icon name="warning" class="text-red" style="font-size: 15rem;" />
+        <q-icon name="warning" class="text-red" style="font-size: 12rem;" />
       </q-card-section>
       <h5 class="text-center text-h5 titleRanking q-pb-lg">Houve um erro ao carregar a lista. Tente novamente.</h5>
     </q-card>
@@ -148,12 +158,14 @@ export default {
         { name: 'passed_championships', label: 'Qde. participação em campeonatos', field: 'amountOfPassedChampionships', align: 'center' },
         { name: 'score', label: 'Pontuação', field: 'global_score', align: 'center' }
       ],
-      currentMenu: 'Global'
+      currentMenu: 'Global',
+      loading: true
     }
   },
   methods: {
     ...mapActions(['searchGlobalRanking', 'searchNiacoyRanking', 'searchXeosorRanking', 'searchVaheanRanking', 'searchSaxiosRanking']),
     parseRanking (currentMenu) {
+      this.loading = true
       if (currentMenu === 'Niacoy') {
         this.niacoyRanking.forEach((row, index) => {
           this.parsedNiacoyRanking.push({
@@ -205,6 +217,7 @@ export default {
           })
         })
       }
+      this.loading = false
     }
   },
   computed: {

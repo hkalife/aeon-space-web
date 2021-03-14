@@ -83,7 +83,7 @@
           color="primary"
           size="md"
           class="full-width q-mt-md"
-          label="Ranking geral"
+          label="Rankings"
           @click="managePageComponents('ranking')"
         />
 
