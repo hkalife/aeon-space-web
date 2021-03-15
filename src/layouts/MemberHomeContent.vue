@@ -3,8 +3,8 @@
     <h5 class="text-left text-h5 titleUser">Bem-vindo(a), {{ user.username }}!</h5>
 
     <div class="row rowCard q-mt-lg">
-      <q-card class="q-mt-lg q-ml-md q-mr-md cardHome text-white" style="height: 100px; min-width: 277px;">
-        <div class="row" style=" justify-content: space-between;">
+      <q-card class="q-mt-lg q-ml-md q-mr-md cardHome text-white">
+        <div class="row" style="justify-content: space-between;">
           <div style="padding-left: 7.5%; padding-top: 20px;">
             <div class="text-left text-h6 titleUser">{{ user.current_championships !== undefined ? user.current_championships.length : '0' }}</div>
             <div class="text-left text-body2 titleUser">Campeonatos atuais</div>
@@ -14,8 +14,8 @@
           </div>
         </div>
       </q-card>
-      <q-card class="q-mt-lg q-ml-md q-mr-md cardHome text-white" style="height: 100px; min-width: 277px;">
-        <div class="row" style=" justify-content: space-between;">
+      <q-card class="q-mt-lg q-ml-md q-mr-md cardHome text-white">
+        <div class="row" style="justify-content: space-between;">
           <div style="padding-left: 7.5%; padding-top: 20px;">
             <div class="text-left text-h6 titleUser">{{ user.championships_won !== undefined ? user.championships_won.length : '0' }}</div>
             <div class="text-left text-body2 titleUser">Campeonatos ganhos</div>
@@ -25,8 +25,8 @@
           </div>
         </div>
       </q-card>
-      <q-card class="q-mt-lg q-ml-md q-mr-md cardHome text-white" style="height: 100px; min-width: 277px;">
-        <div class="row" style=" justify-content: space-between;">
+      <q-card class="q-mt-lg q-ml-md q-mr-md cardHome text-white">
+        <div class="row" style="justify-content: space-between;">
           <div style="padding-left: 7.5%; padding-top: 20px;">
             <div class="text-left text-h6 titleUser">{{ user.global_score }}</div>
             <div class="text-left text-body2 titleUser">Sua pontuação total</div>
@@ -114,8 +114,9 @@ export default {
 
 .cardHome {
   width: 30%;
-  min-width: 200px;
   background-color: #0D47A1;
+  height: 100px;
+  min-width: 277px;
 }
 
 .rowCard {
