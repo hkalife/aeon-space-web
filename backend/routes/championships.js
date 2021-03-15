@@ -81,9 +81,6 @@ router.put('/subscribe/:id', jsonParser, (req, res) => {
 
   db.collection('championships').doc(req.params.id).get().then((response) => {
     const championship = response.data()
-
-    console.log(req.body)
-
     const newPlayer = {
       user_id: req.body.user_id,
       username: req.body.username,
