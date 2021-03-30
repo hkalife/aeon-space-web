@@ -43,7 +43,7 @@ export default {
   name: 'PageHome',
   methods: {
     openURLgame () {
-      window.open('https://drive.google.com/file/d/1bKOvK-OU5n1TM_CUadtT36Rha3iZ5IqN/view?usp=sharing')
+      window.open('https://drive.google.com/drive/u/0/folders/1voRxzT0Sql_ZxP4bqJ9ESBX-GeKzTFX7')
     }
   }
 }
