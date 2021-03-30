@@ -3,7 +3,7 @@
     <div class="v-header">
       <div class="fullscreen-video-wrap">
         <!-- VIDEO SERÁ REVISTO POR QUESTÕES DE TAMANHO -->
-        <video src="../assets/video.mp4" autoplay="" loop="" muted>
+        <video src="../assets/aeon.mp4" autoplay="" loop="" muted>
       </video>
       </div>
       <div class="header-overlay bg-dark" ></div>

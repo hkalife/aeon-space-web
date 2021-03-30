@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const urlSettings = {
-  baseURL: 'http://localhost:3000/',
+  baseURL: 'http://http://aeon-space-backend.herokuapp.com/',
   withCredentials: false,
   headers: {
     Accept: 'application/json',
