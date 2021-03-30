@@ -2,7 +2,6 @@
   <q-page class="constrain-more q-pa-md">
     <div class="v-header">
       <div class="fullscreen-video-wrap">
-        <!-- VIDEO SERÁ REVISTO POR QUESTÕES DE TAMANHO -->
         <video src="../assets/aeon.mp4" autoplay="" loop="" muted>
       </video>
       </div>
@@ -21,7 +20,7 @@
             size="lg"
             label="Baixe o game"
             class="q-ma-md"
-            to="https://itch.io"
+            @click="openURLgame()"
           />
           <q-btn
             unelevated
@@ -41,7 +40,12 @@
 // import firebase from 'firebase'
 
 export default {
-  name: 'PageHome'
+  name: 'PageHome',
+  methods: {
+    openURLgame () {
+      window.open('https://drive.google.com/file/d/1bKOvK-OU5n1TM_CUadtT36Rha3iZ5IqN/view?usp=sharing')
+    }
+  }
 }
 </script>
 
