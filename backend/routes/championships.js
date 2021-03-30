@@ -76,6 +76,29 @@ router.put('/:id', jsonParser, (req, res) => {
   })
 })
 
+router.post('/updatechampionshipscore/:id&:userId&:score', jsonParser, (req, res) => {
+  res.set('Access-Control-Allow-Origin', '*')
+
+  db.collection('championships').doc(req.params.id).get().then((response) => {
+    console.log(req.body)
+    let championship = response.data()
+    let newPlayers = championship.players
+    
+    for (const player of newPlayers) {
+      if (player.user_id === req.params.userId) {
+        player.score += parseInt(req.params.score)
+      }
+    }
+
+    championship.players = newPlayers
+
+    db.collection('championships').doc(req.params.id).update(championship).then(() => {
+      res.send(req.body)
+    })
+    
+  })
+})
+
 router.put('/subscribe/:id', jsonParser, (req, res) => {
   res.set('Access-Control-Allow-Origin', '*')
 
