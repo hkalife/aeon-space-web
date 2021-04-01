@@ -167,6 +167,7 @@ export default {
     parseRanking (currentMenu) {
       this.loading = true
       if (currentMenu === 'Niacoy') {
+        this.parsedNiacoyRanking = []
         this.niacoyRanking.forEach((row, index) => {
           this.parsedNiacoyRanking.push({
             ...row,
@@ -177,6 +178,7 @@ export default {
           })
         })
       } else if (currentMenu === 'Xeosor') {
+        this.parsedXeosorRanking = []
         this.xeosorRanking.forEach((row, index) => {
           this.parsedXeosorRanking.push({
             ...row,
@@ -187,6 +189,7 @@ export default {
           })
         })
       } else if (currentMenu === 'Vahean') {
+        this.parsedVaheanRanking = []
         this.vaheanRanking.forEach((row, index) => {
           this.parsedVaheanRanking.push({
             ...row,
@@ -197,6 +200,7 @@ export default {
           })
         })
       } else if (currentMenu === 'Saxios') {
+        this.parsedSaxiosRanking = []
         this.saxiosRanking.forEach((row, index) => {
           this.parsedSaxiosRanking.push({
             ...row,
@@ -207,6 +211,7 @@ export default {
           })
         })
       } else {
+        this.parsedTopRanking = []
         this.globalRanking.forEach((row, index) => {
           this.parsedTopRanking.push({
             ...row,
