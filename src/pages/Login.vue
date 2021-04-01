@@ -77,14 +77,9 @@ export default {
     logUser () {
       const self = this
       firebase.auth().signInWithEmailAndPassword(this.email, this.password)
-        .then((user) => {
-          console.log(user)
-        })
+        .then()
         .catch((error) => {
           var errorCode = error.code
-          console.log(errorCode)
-          var errorMessage = error.message
-          console.log(errorMessage)
           self.triggerErrorLogin(errorCode)
         })
     },
@@ -109,7 +104,6 @@ export default {
     const self = this
     firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
-        console.log(user)
         self.$router.push({ path: '/member-home' })
       } else {
         self.loading = false
