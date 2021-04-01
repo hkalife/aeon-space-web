@@ -51,6 +51,9 @@ export default {
       email: ''
     }
   },
+  mounted () {
+    console.clear()
+  },
   methods: {
     sendEmailToRetrieve () {
       const self = this

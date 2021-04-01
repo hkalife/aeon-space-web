@@ -115,6 +115,9 @@ export default {
       user: state => state.user
     })
   },
+  mounted () {
+    console.clear()
+  },
   methods: {
     ...mapActions(['createUser']),
     createUserForAuthentication () {

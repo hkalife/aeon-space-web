@@ -193,6 +193,7 @@ export default {
     }
   },
   mounted () {
+    console.clear()
     this.checkIfUserIsLogged()
   }
 }

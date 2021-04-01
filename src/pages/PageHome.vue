@@ -41,6 +41,9 @@
 
 export default {
   name: 'PageHome',
+  mounted () {
+    console.clear()
+  },
   methods: {
     openURLgame () {
       window.open('https://drive.google.com/drive/u/0/folders/1voRxzT0Sql_ZxP4bqJ9ESBX-GeKzTFX7')

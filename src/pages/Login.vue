@@ -100,6 +100,9 @@ export default {
       })
     }
   },
+  mounted () {
+    console.clear()
+  },
   beforeMount () {
     const self = this
     firebase.auth().onAuthStateChanged(function (user) {
