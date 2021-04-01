@@ -80,7 +80,6 @@ router.post('/updatechampionshipscore/:id&:userId&:score', jsonParser, (req, res
   res.set('Access-Control-Allow-Origin', '*')
 
   db.collection('championships').doc(req.params.id).get().then((response) => {
-    console.log(req.body)
     let championship = response.data()
     let newPlayers = championship.players
     

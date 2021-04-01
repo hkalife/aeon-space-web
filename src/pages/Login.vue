@@ -75,18 +75,11 @@ export default {
   },
   methods: {
     logUser () {
-      console.log('login')
       const self = this
       firebase.auth().signInWithEmailAndPassword(this.email, this.password)
-        .then((user) => {
-          console.log('logou')
-          console.log(user)
-        })
+        .then()
         .catch((error) => {
           var errorCode = error.code
-          console.log(errorCode)
-          var errorMessage = error.message
-          console.log(errorMessage)
           self.triggerErrorLogin(errorCode)
         })
     },
@@ -111,12 +104,8 @@ export default {
     const self = this
     firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
-        console.log('logado')
-        console.log(user)
         self.$router.push({ path: '/member-home' })
       } else {
-        // No user is signed in.
-        console.log('não logado')
         self.loading = false
       }
     })
