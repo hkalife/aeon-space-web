@@ -153,6 +153,7 @@ export default {
         email: this.email,
         championships_won: [],
         class: this.choiceClass,
+        score_history: [],
         photo: this.imageUploadInput !== null ? `https://firebasestorage.googleapis.com/v0/b/aeon-space.appspot.com/o/${photoName}?alt=media` : this.imageUploadInput
       }
 
