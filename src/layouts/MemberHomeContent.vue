@@ -85,6 +85,20 @@ export default {
       parsedScoreHistoryList: []
     }
   },
+  methods: {
+    lastPointsInfo () {
+      const story = this.user.score_history
+      if (story !== undefined) {
+        for (let i = 0; i < story.length; i++) {
+          story[i] = {
+            ...story[i],
+            parsed_date: date.formatDate(story[i].date, 'DD/MM/YYYY')
+          }
+        }
+        this.parsedScoreHistoryList = story
+      }
+    }
+  },
   computed: {
     ...mapState({
       user: state => state.user.user
@@ -101,6 +115,9 @@ export default {
       }
       this.parsedScoreHistoryList = story
     }
+  },
+  mounted () {
+    this.lastPointsInfo()
   }
 }
 </script>
